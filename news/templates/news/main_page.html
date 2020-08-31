@@ -1,0 +1,20 @@
+<html>
+<body>
+<h2>Hyper news</h2>
+<form action = "/news" method = "get">{% csrf_token %}
+<input type = "text" name = "q">
+</form>
+{% regroup news_load|dictsortreversed:"created" by created as news_list %}
+{% for created, otherdata in news_list %}
+<h4>{{created | date:"Y-m-d" }}</h4>
+
+<ul>
+ {% for news in otherdata %}
+  <li><a href="/news/{{news.link}}/">{{news.title}}</a></li>
+{% endfor %} 
+</ul>
+{% endfor %} 
+<li><a target="_blank" href="/news/create/"> Create new page </a></li>
+
+</body>
+</html>
